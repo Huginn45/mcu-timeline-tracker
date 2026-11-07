@@ -1,0 +1,363 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>GlassMCU | Official Timeline Tracker (Disney+ &amp; Marvel Studios Official Timeline)</title>
+  <meta name="description" content="Official Marvel Cinematic Universe Sacred Timeline Tracker codifying Disney+ and Marvel Studios: An Official Timeline (DK Books).">
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700;800;900&display=swap" rel="stylesheet">
+  <link rel="stylesheet" href="css/style.css">
+  <link rel="icon" href="data:image/svg+xml,<svg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 100 100'><rect width='100' height='100' rx='20' fill='%2310b981'/><text x='50%' y='68%' font-size='55' font-weight='900' fill='white' font-family='Arial, sans-serif' text-anchor='middle'>G</text></svg>">
+</head>
+<body data-theme="dark">
+
+  <div class="app-layout">
+
+    <!-- ====================================================================
+         LEFT SIDEBAR NAVIGATION (Matches GlassDash Left Navigation)
+         ==================================================================== -->
+    <aside class="glass-sidebar" id="sidebar">
+      <div>
+        <!-- Logo -->
+        <a href="#" class="sidebar-logo">
+          <div class="logo-icon-wrap">G</div>
+          <div class="logo-text">
+            <h2>GlassMCU</h2>
+            <span>Timeline Dash</span>
+          </div>
+        </a>
+
+        <!-- Main Navigation Section (Simplified to All Timeline, Films, and TV Series) -->
+        <div class="sidebar-section-title">Main Menu</div>
+        <ul class="sidebar-nav">
+          <li class="sidebar-nav-item">
+            <button class="sidebar-link active" data-nav-filter="all">
+              <span class="sidebar-link-content">
+                <span class="nav-icon">⊞</span>
+                <span>All Timeline</span>
+              </span>
+              <span class="sidebar-pill-badge" id="badge-count-all">84</span>
+            </button>
+          </li>
+          <li class="sidebar-nav-item">
+            <button class="sidebar-link" data-nav-filter="films">
+              <span class="sidebar-link-content">
+                <span class="nav-icon">🎬</span>
+                <span>Films</span>
+              </span>
+              <span class="sidebar-pill-badge amber" id="badge-count-films">39</span>
+            </button>
+          </li>
+          <li class="sidebar-nav-item">
+            <button class="sidebar-link" data-nav-filter="tv">
+              <span class="sidebar-link-content">
+                <span class="nav-icon">📺</span>
+                <span>TV Series</span>
+              </span>
+              <span class="sidebar-pill-badge cyan" id="badge-count-tv">45</span>
+            </button>
+          </li>
+        </ul>
+      </div>
+
+      <!-- Utilities & Controls Section at Bottom -->
+      <div class="sidebar-footer">
+        <div class="sidebar-section-title" style="padding-left:0.5rem; margin-top:0;">Account &amp; Tools</div>
+        <ul class="sidebar-nav">
+          <li class="sidebar-nav-item">
+            <button class="sidebar-link" id="check-updates-btn">
+              <span class="sidebar-link-content">
+                <span class="nav-icon" id="sync-icon">🔄</span>
+                <span id="sync-label">Check for Updates</span>
+              </span>
+              <span class="sidebar-pill-badge green" id="sync-badge" style="display:none;">New</span>
+            </button>
+          </li>
+          <li class="sidebar-nav-item">
+            <button class="sidebar-link" id="theme-toggle-btn">
+              <span class="sidebar-link-content">
+                <span class="nav-icon" id="theme-icon">☀️</span>
+                <span id="theme-label">Light Glass Mode</span>
+              </span>
+            </button>
+          </li>
+          <li class="sidebar-nav-item">
+            <button class="sidebar-link" id="export-btn">
+              <span class="sidebar-link-content">
+                <span class="nav-icon">💾</span>
+                <span>Export Backup</span>
+              </span>
+            </button>
+          </li>
+          <li class="sidebar-nav-item">
+            <button class="sidebar-link" id="import-btn">
+              <span class="sidebar-link-content">
+                <span class="nav-icon">📥</span>
+                <span>Import Backup</span>
+              </span>
+            </button>
+          </li>
+          <li class="sidebar-nav-item">
+            <button class="sidebar-link" id="reset-btn" style="color:#fb7185;">
+              <span class="sidebar-link-content">
+                <span class="nav-icon">🔄</span>
+                <span>Reset Progress</span>
+              </span>
+            </button>
+          </li>
+        </ul>
+      </div>
+    </aside>
+
+    <!-- ====================================================================
+         MAIN DASHBOARD AREA
+         ==================================================================== -->
+    <main class="dashboard-main">
+
+      <!-- Topbar with Breadcrumbs, Search, and View Switcher -->
+      <header class="topbar">
+        <div class="topbar-header">
+          <div class="breadcrumb">
+            <span>Dashboard</span>
+            <span>/</span>
+            <span id="current-scope-breadcrumb">Timeline Overview</span>
+          </div>
+          <h1 class="page-title" id="page-heading">Timeline Analytics</h1>
+        </div>
+
+        <div class="topbar-actions">
+          <!-- Glass Search Box -->
+          <div class="search-pill-box">
+            <span class="search-pill-icon">🔍</span>
+            <input type="text" id="search-input" class="search-pill-input" placeholder="Search anything..." autocomplete="off">
+            <button id="clear-search-btn" class="clear-search-btn" title="Clear search">✕</button>
+          </div>
+
+          <!-- View Switcher (Cards vs Table) -->
+          <div class="view-switch-box">
+            <button class="view-switch-btn active" id="view-table-btn" title="Recent Transactions Style Table">
+              <span>☰</span> List
+            </button>
+            <button class="view-switch-btn" id="view-grid-btn" title="Glass Cards Grid">
+              <span>⊞</span> Cards
+            </button>
+          </div>
+        </div>
+      </header>
+
+      <!-- Realtime Update Notification Banner (Hidden by default) -->
+      <div id="update-toast-banner" class="update-toast-banner" style="display: none;" role="alert">
+        <div class="update-toast-content">
+          <span class="update-toast-icon">✨</span>
+          <span id="update-toast-text">New MCU releases have been synchronized to your timeline!</span>
+        </div>
+        <div class="update-toast-actions">
+          <button id="update-toast-view-btn" class="btn-toast-action">View New Titles</button>
+          <button id="update-toast-dismiss-btn" class="btn-toast-dismiss" title="Dismiss notification">✕</button>
+        </div>
+      </div>
+
+      <!-- ====================================================================
+           4 KPI METRIC CARDS ROW (Exact match to top row of screenshot)
+           ==================================================================== -->
+      <section class="kpi-grid">
+        <!-- KPI 1: Overall Progress -->
+        <div class="kpi-card">
+          <div class="kpi-card-header">
+            <span class="kpi-title">Total Watched</span>
+            <div class="kpi-icon-bubble kpi-icon-green">👁️</div>
+          </div>
+          <div class="kpi-value-row">
+            <div class="kpi-number">
+              <span id="total-watched-count">0</span>
+              <small>/ <span id="total-items-count">100</span></small>
+            </div>
+            <span class="kpi-trend-pill kpi-trend-green" id="total-percent-text">+0.0%</span>
+          </div>
+        </div>
+
+        <!-- KPI 2: Movies Watched -->
+        <div class="kpi-card">
+          <div class="kpi-card-header">
+            <span class="kpi-title">Feature Films</span>
+            <div class="kpi-icon-bubble kpi-icon-amber">🎬</div>
+          </div>
+          <div class="kpi-value-row">
+            <div class="kpi-number" id="stat-movies">0 <small>/ 0</small></div>
+            <span class="kpi-trend-pill kpi-trend-amber" id="stat-movies-trend">Movies</span>
+          </div>
+        </div>
+
+        <!-- KPI 3: TV Seasons -->
+        <div class="kpi-card">
+          <div class="kpi-card-header">
+            <span class="kpi-title">TV Seasons</span>
+            <div class="kpi-icon-bubble kpi-icon-cyan">📺</div>
+          </div>
+          <div class="kpi-value-row">
+            <div class="kpi-number" id="stat-series">0 <small>/ 0</small></div>
+            <span class="kpi-trend-pill kpi-trend-green" id="stat-series-trend">Series</span>
+          </div>
+        </div>
+
+        <!-- KPI 4: Specials & Sagas -->
+        <div class="kpi-card">
+          <div class="kpi-card-header">
+            <span class="kpi-title">Infinity / Multiverse</span>
+            <div class="kpi-icon-bubble kpi-icon-purple">🌌</div>
+          </div>
+          <div class="kpi-value-row">
+            <div class="kpi-number" style="font-size:1.35rem;">
+              <span id="stat-infinity">0/0</span>
+              <small style="margin: 0 4px;">•</small>
+              <span id="stat-multiverse">0/0</span>
+            </div>
+            <span class="kpi-trend-pill kpi-trend-green">Sagas</span>
+          </div>
+        </div>
+      </section>
+
+      <!-- Up Next Glass Panel (Matches Traffic Overview style) -->
+      <section id="up-next-section"></section>
+
+      <!-- Controls & Filter Tags Bar -->
+      <section class="controls-glass-bar">
+        <div class="controls-row-top">
+          <div style="display:flex; align-items:center; gap:0.75rem; flex-wrap:wrap;">
+            <select id="phase-filter" class="select-glass" aria-label="Filter by MCU Phase">
+              <option value="all">All Phases</option>
+              <option value="Phase 1">Phase 1</option>
+              <option value="Phase 2">Phase 2</option>
+              <option value="Phase 3">Phase 3</option>
+              <option value="Phase 4">Phase 4</option>
+              <option value="Phase 5">Phase 5</option>
+              <option value="Phase 6">Phase 6</option>
+            </select>
+
+            <select id="saga-filter" class="select-glass" aria-label="Filter by Saga">
+              <option value="all">All Sagas</option>
+              <option value="The Infinity Saga">The Infinity Saga</option>
+              <option value="The Multiverse Saga">The Multiverse Saga</option>
+            </select>
+
+            <select id="sort-select" class="select-glass" aria-label="Sort timeline order">
+              <option value="chronological">Official Timeline Order (Disney+ &amp; DK Books)</option>
+              <option value="release">Release Premiere Order</option>
+              <option value="title">Title (A to Z)</option>
+            </select>
+          </div>
+
+          <div style="display:flex; align-items:center; gap:0.5rem;">
+            <button class="btn-glass" id="bulk-mark-btn" style="padding:0.4rem 0.75rem; font-size:0.78rem;">
+              ✓ Mark Filtered Watched
+            </button>
+            <button class="btn-glass" id="bulk-unmark-btn" style="padding:0.4rem 0.75rem; font-size:0.78rem;">
+              ✕ Unmark Filtered
+            </button>
+          </div>
+        </div>
+
+        <div class="controls-row-pills">
+          <span class="filter-tag-label">Type:</span>
+          <button class="filter-glass-pill active" data-filter-type="all">All</button>
+          <button class="filter-glass-pill" data-filter-type="movie">Movies</button>
+          <button class="filter-glass-pill" data-filter-type="series">TV Series</button>
+          <button class="filter-glass-pill" data-filter-type="animation">Animation</button>
+          <button class="filter-glass-pill" data-filter-type="oneshot">One-Shots</button>
+          <button class="filter-glass-pill" data-filter-type="special">Specials</button>
+
+          <span class="filter-tag-label" style="margin-left: 0.85rem;">Status:</span>
+          <button class="filter-glass-pill active" data-filter-status="all">All</button>
+          <button class="filter-glass-pill" data-filter-status="unwatched">Unwatched</button>
+          <button class="filter-glass-pill" data-filter-status="watched">Watched</button>
+        </div>
+      </section>
+
+      <!-- Main Timeline Section -->
+      <section class="timeline-section">
+        <div style="display:flex; justify-content:space-between; align-items:center; margin-bottom:0.85rem; font-size:0.82rem; color:var(--text-muted);">
+          <div id="results-count">Showing 100 of 100 titles</div>
+        </div>
+
+        <!-- Rendered Container -->
+        <div id="timeline-container"></div>
+      </section>
+
+    </main>
+  </div>
+
+  <!-- Modal: Notes & Review -->
+  <div class="modal-backdrop" id="note-modal" role="dialog" aria-modal="true">
+    <div class="modal">
+      <div class="modal-header">
+        <h3 class="modal-title" id="note-modal-title">Notes &amp; Viewing Log</h3>
+        <button class="modal-close-btn close-note-modal" aria-label="Close modal">✕</button>
+      </div>
+      <div class="modal-body">
+        <div class="form-group">
+          <label class="form-label" for="note-date-input">Date Watched</label>
+          <input type="date" id="note-date-input" class="form-input">
+        </div>
+        <div class="form-group">
+          <label class="form-label" for="note-textarea">Personal Notes / Review</label>
+          <textarea id="note-textarea" class="form-textarea" placeholder="Add your thoughts, favorite quotes, review, or who you watched it with..."></textarea>
+        </div>
+      </div>
+      <div class="modal-footer">
+        <button class="btn-glass close-note-modal">Cancel</button>
+        <button class="btn-glass btn-primary-green" id="note-save-btn">Save Notes</button>
+      </div>
+    </div>
+  </div>
+
+  <!-- Modal: Import Backup -->
+  <div class="modal-backdrop" id="import-modal" role="dialog" aria-modal="true">
+    <div class="modal">
+      <div class="modal-header">
+        <h3 class="modal-title">Import Progress Backup</h3>
+        <button class="modal-close-btn close-import-modal" aria-label="Close modal">✕</button>
+      </div>
+      <div class="modal-body">
+        <div class="form-group">
+          <label class="form-label" for="import-file">Upload JSON File</label>
+          <input type="file" id="import-file" class="form-input" accept=".json">
+        </div>
+        <div class="form-group">
+          <label class="form-label" for="import-textarea">Or Paste JSON Data Directly</label>
+          <textarea id="import-textarea" class="form-textarea" placeholder="Paste your exported JSON here..."></textarea>
+        </div>
+      </div>
+      <div class="modal-footer">
+        <button class="btn-glass close-import-modal">Cancel</button>
+        <button class="btn-glass btn-primary-green" id="import-submit-btn">Restore Progress</button>
+      </div>
+    </div>
+  </div>
+
+  <!-- Modal: Confirm Action -->
+  <div class="modal-backdrop" id="confirm-modal" role="dialog" aria-modal="true">
+    <div class="modal">
+      <div class="modal-header">
+        <h3 class="modal-title">Confirmation</h3>
+        <button class="modal-close-btn close-confirm-modal" aria-label="Close modal">✕</button>
+      </div>
+      <div class="modal-body">
+        <p id="confirm-modal-msg" style="color: var(--text-muted); font-size: 0.95rem;"></p>
+      </div>
+      <div class="modal-footer">
+        <button class="btn-glass close-confirm-modal">Cancel</button>
+        <button class="btn-glass btn-primary-green" id="confirm-modal-ok" style="background:#e11d48;">Confirm</button>
+      </div>
+    </div>
+  </div>
+
+  <!-- Toast Container -->
+  <div class="toast-container" id="toast-container"></div>
+
+  <!-- Scripts -->
+  <script src="js/data.js"></script>
+  <script src="js/app.js"></script>
+</body>
+</html>

@@ -1,0 +1,22 @@
+{
+  "name": "mcu-timeline-tracker",
+  "version": "2.0.0",
+  "description": "GlassDash MCU Timeline Tracker & Marathon Progress Checker",
+  "main": "js/app.js",
+  "scripts": {
+    "sync": "node scripts/sync-timeline.js",
+    "check": "node scripts/sync-timeline.js --check",
+    "test": "node scripts/sync-timeline.js --check"
+  },
+  "keywords": [
+    "mcu",
+    "marvel",
+    "timeline",
+    "tracker",
+    "disney-plus",
+    "imdb",
+    "glassmorphism"
+  ],
+  "author": "Wesley",
+  "license": "MIT"
+}

@@ -1,0 +1,46 @@
+name: Auto-Sync MCU Timeline Releases
+
+on:
+  # Run weekly on Monday at 06:00 UTC
+  schedule:
+    - cron: '0 6 * * 1'
+  
+  # Allow manual trigger at any time from GitHub Actions UI
+  workflow_dispatch:
+    inputs:
+      force_sync:
+        description: 'Force sync and commit even if minor changes'
+        required: false
+        type: boolean
+        default: false
+
+permissions:
+  contents: write
+
+jobs:
+  sync-timeline:
+    runs-on: ubuntu-latest
+    steps:
+      - name: Checkout Repository
+        uses: actions/checkout@v4
+
+      - name: Setup Node.js
+        uses: actions/setup-node@v4
+        with:
+          node-version: 20
+
+      - name: Run MCU Release Sync Script
+        run: node scripts/sync-timeline.js
+
+      - name: Commit and Push Changes If Updated
+        run: |
+          git config --global user.name "github-actions[bot]"
+          git config --global user.email "github-actions[bot]@users.noreply.github.com"
+          git add data/timeline.json js/data.js
+          if ! git diff --cached --quiet; then
+            git commit -m "chore(timeline): auto-sync newly announced MCU releases [skip ci]"
+            git push
+            echo "Successfully committed and pushed new MCU timeline updates."
+          else
+            echo "No new MCU releases detected. Working tree is clean."
+          fi
