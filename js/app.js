@@ -480,22 +480,19 @@
     elements.upNextSection.innerHTML = `
       <div class="up-next-glass-panel">
         <div class="up-next-inner">
-          <div style="flex:1; min-width:280px;">
+          <div style="flex:1; min-width:260px;">
             <div class="up-next-tag-row">
-              <span class="up-next-indicator">Up Next on Sacred Timeline</span>
+              <span class="up-next-indicator">Up Next</span>
               <span class="badge-glass-order">#${nextItem.order}</span>
-              <span class="badge-era" title="${nextItem.bookNote || ''}">📖 ${nextItem.timelineEra}</span>
-              <span class="badge-canon">Disney+ &amp; Book</span>
+              <span class="badge-era">${nextItem.timelineEra}</span>
             </div>
             <h3 class="up-next-title-text">${nextItem.title}</h3>
             <div class="up-next-meta-text">
-              <span>📅 ${nextItem.releaseYear}</span>
+              <span>${nextItem.releaseYear}</span>
               <span>•</span>
-              <span>⏱️ ${nextItem.duration}</span>
+              <span>${nextItem.duration}</span>
               <span>•</span>
-              <span>🏷️ ${nextItem.phase}</span>
-              <span>•</span>
-              <span>📂 ${nextItem.saga}</span>
+              <span>${nextItem.phase}</span>
             </div>
             <p class="up-next-desc-text">${nextItem.bookNote || nextItem.description}</p>
           </div>
@@ -523,10 +520,10 @@
 
   function getTypeLabel(type) {
     switch (type) {
-      case 'movie': return 'Feature Film';
-      case 'series': return 'TV Series';
-      case 'animation': return 'Animated Series';
-      case 'oneshot': return 'Marvel One-Shot';
+      case 'movie': return 'Film';
+      case 'series': return 'Series';
+      case 'animation': return 'Animation';
+      case 'oneshot': return 'One-Shot';
       case 'special': return 'Special';
       default: return type;
     }
@@ -554,27 +551,24 @@
       <div class="table-container-card">
         <div class="table-glass-header">
           <div>
-            <h3>Official Sacred Timeline Archive</h3>
-            <span style="display:inline-flex; align-items:center; gap:0.35rem; color:var(--text-muted);">
-              Codified by Disney+ &amp; Marvel Studios: An Official Timeline (DK Books)
+            <h3>Official Sacred Timeline</h3>
+            <span style="color:var(--text-muted); font-size:0.78rem;">
+              Chronological Viewing Order (Disney+ &amp; Marvel Studios)
             </span>
           </div>
-          <span style="font-size:0.75rem; font-weight:700; color:var(--timeline-orange-400); background:rgba(249,115,22,0.15); padding:0.25rem 0.65rem; border-radius:12px;">
-            ${items.length} Titles
-          </span>
+          <span class="table-count-pill">${items.length} Titles</span>
         </div>
 
         <table class="glass-table">
           <thead>
             <tr>
-              <th style="width: 50px; text-align: center;">Done</th>
-              <th style="width: 65px;">Order</th>
+              <th style="width: 44px; text-align: center;">Done</th>
+              <th style="width: 50px;">#</th>
               <th>Title &amp; In-Universe Era</th>
-              <th>Type</th>
-              <th>Year</th>
-              <th>Status</th>
-              <th>Rating</th>
-              <th style="text-align: right;">Links</th>
+              <th style="width: 95px;">Type</th>
+              <th style="width: 65px;">Year</th>
+              <th style="width: 105px;">Rating</th>
+              <th style="width: 95px; text-align: right;">Links</th>
             </tr>
           </thead>
           <tbody>
@@ -583,7 +577,6 @@
               const rating = state.ratings[item.id] || 0;
               const hasNote = !!state.notes[item.id];
               const primaryLink = item.disneyLink || item.imdbLink;
-              const { initials, colorClass } = getAvatarData(item.title);
 
               return `
                 <tr class="${isWatched ? 'row-watched' : ''}">
@@ -596,34 +589,26 @@
                     </button>
                   </td>
                   <td>
-                    <span class="badge-glass-order">#${item.order}</span>
+                    <span class="badge-glass-order">${item.order}</span>
                   </td>
                   <td>
                     <div class="table-title-cell">
-                      <div class="title-avatar ${colorClass}">${initials}</div>
                       <div class="title-info">
                         <a href="${primaryLink}" target="_blank" rel="noopener noreferrer" class="title-name">
                           ${item.title}
                         </a>
-                        <div style="display:flex; align-items:center; gap:0.4rem; margin-top:3px; flex-wrap:wrap;">
-                          <span class="badge-era" title="${item.bookNote || ''}">📖 ${item.timelineEra}</span>
-                          <span class="title-subline">${item.phase} • ${item.saga}</span>
+                        <div class="title-subline">
+                          <span>${item.timelineEra}</span>
+                          <span>•</span>
+                          <span>${item.phase}</span>
                         </div>
                       </div>
                     </div>
                   </td>
                   <td>
                     <span class="badge-type ${item.type}">${getTypeLabel(item.type)}</span>
-                    <div style="margin-top: 3px;">
-                      <span class="badge-canon" title="Official Marvel Studios Timeline">Disney+ &amp; Book</span>
-                    </div>
                   </td>
-                  <td style="color:var(--text-muted); font-weight:600;">${item.releaseYear}</td>
-                  <td>
-                    <span class="status-pill ${isWatched ? 'status-completed' : 'status-unwatched'}">
-                      ${isWatched ? '● Completed' : '○ Unwatched'}
-                    </span>
-                  </td>
+                  <td class="table-year-cell">${item.releaseYear}</td>
                   <td>
                     ${renderStars(item.id, rating)}
                   </td>
@@ -675,7 +660,6 @@
           const rating = state.ratings[item.id] || 0;
           const hasNote = !!state.notes[item.id];
           const primaryLink = item.disneyLink || item.imdbLink;
-          const { initials, colorClass } = getAvatarData(item.title);
 
           return `
             <div class="card ${isWatched ? 'watched' : ''}" id="card-${item.id}">
@@ -683,7 +667,7 @@
                 <div class="card-top">
                   <div class="card-badges">
                     <span class="badge-glass-order">#${item.order}</span>
-                    <span class="badge-era" title="${item.bookNote || ''}">📖 ${item.timelineEra}</span>
+                    <span class="badge-era">${item.timelineEra}</span>
                     <span class="badge-type ${item.type}">${getTypeLabel(item.type)}</span>
                   </div>
                   <button 
@@ -694,17 +678,14 @@
                   </button>
                 </div>
 
-                <div style="display:flex; align-items:center; gap:0.75rem; margin-bottom:0.5rem;">
-                  <div class="title-avatar ${colorClass}" style="width:32px; height:32px; font-size:0.7rem;">${initials}</div>
-                  <h3 class="card-title" style="margin-bottom:0;">
-                    <a href="${primaryLink}" target="_blank" rel="noopener noreferrer">${item.title}</a>
-                  </h3>
-                </div>
+                <h3 class="card-title">
+                  <a href="${primaryLink}" target="_blank" rel="noopener noreferrer">${item.title}</a>
+                </h3>
 
                 <div class="card-meta-line">
-                  <span>📅 ${item.releaseYear}</span>
+                  <span>${item.releaseYear}</span>
                   <span>•</span>
-                  <span>⏱️ ${item.duration}</span>
+                  <span>${item.duration}</span>
                   <span>•</span>
                   <span>${item.phase}</span>
                 </div>
