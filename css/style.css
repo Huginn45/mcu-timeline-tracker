@@ -1,27 +1,27 @@
 /* ==========================================================================
-   TVA SACRED TIMELINE DESIGN SYSTEM
-   Inspired by the Time Variance Authority aesthetic from Marvel Studios' Loki
-   (Temporal Loom Amber, 1970s Archival Bureaucracy & Retro-Futurism)
+   THE SACRED TIMELINE DESIGN SYSTEM
+   Inspired by mid-century retro-futurism & temporal chronologies
+   (Obsidian Walnut Amber, Radiant Glow & Archival Manila Paper)
    ========================================================================== */
 
 :root {
-  /* TVA Official Chromatic Palette */
-  --tva-orange-300: #fdba74;
-  --tva-orange-400: #fb923c;
-  --tva-orange-500: #f97316; /* Iconic TVA Seal Orange */
-  --tva-orange-600: #ea580c;
-  --tva-orange-700: #c2410c;
-  --tva-glow: rgba(249, 115, 22, 0.32);
+  /* Chromatic Palette */
+  --timeline-orange-300: #fdba74;
+  --timeline-orange-400: #fb923c;
+  --timeline-orange-500: #f97316;
+  --timeline-orange-600: #ea580c;
+  --timeline-orange-700: #c2410c;
+  --timeline-glow: rgba(249, 115, 22, 0.32);
 
-  --tva-gold-300: #fde047;
-  --tva-gold-400: #facc15;
-  --tva-gold-500: #eab308; /* Temporal Loom Gold */
-  --tva-gold-glow: rgba(234, 179, 8, 0.28);
+  --timeline-gold-300: #fde047;
+  --timeline-gold-400: #facc15;
+  --timeline-gold-500: #eab308;
+  --timeline-gold-glow: rgba(234, 179, 8, 0.28);
 
-  --tva-bronze-500: #b45309;
-  --tva-brass-border: rgba(245, 158, 11, 0.25);
+  --timeline-bronze-500: #b45309;
+  --timeline-brass-border: rgba(245, 158, 11, 0.25);
 
-  /* Primary Accent Colors Mapped to TVA Palette */
+  /* Primary Accent Colors */
   --emerald-400: #fb923c;
   --emerald-500: #f97316;
   --emerald-600: #ea580c;
@@ -51,7 +51,7 @@
 }
 
 /* ==========================================================================
-   THEME: TVA TEMPORAL LOOM (Dark Mode - Deep Walnut & Radiant Amber)
+   THEME: TEMPORAL OBSIDIAN (Dark Mode - Deep Walnut & Radiant Amber)
    ========================================================================== */
 body[data-theme="dark"],
 body:not([data-theme="light"]) {
@@ -83,7 +83,7 @@ body:not([data-theme="light"]) {
 }
 
 /* ==========================================================================
-   THEME: TVA RECORDS & ARCHIVE (Light Mode - Warm Mid-century Manila & Brass)
+   THEME: PARCHMENT ARCHIVE (Light Mode - Warm Mid-century Manila & Brass)
    ========================================================================== */
 body[data-theme="light"] {
   --bg-app: #f6f1e8;
@@ -464,13 +464,13 @@ body[data-theme="light"] .sidebar-link.active {
 }
 
 .btn-primary-green {
-  background: linear-gradient(135deg, var(--tva-orange-500) 0%, var(--tva-orange-600) 100%);
+  background: linear-gradient(135deg, var(--timeline-orange-500) 0%, var(--timeline-orange-600) 100%);
   color: #fff;
   border: 1px solid rgba(255, 255, 255, 0.2);
-  box-shadow: 0 4px 15px var(--tva-glow);
+  box-shadow: 0 4px 15px var(--timeline-glow);
 }
 .btn-primary-green:hover {
-  background: linear-gradient(135deg, var(--tva-orange-600) 0%, var(--tva-orange-700) 100%);
+  background: linear-gradient(135deg, var(--timeline-orange-600) 0%, var(--timeline-orange-700) 100%);
   box-shadow: 0 6px 20px rgba(249, 115, 22, 0.45);
   transform: translateY(-1px);
 }
@@ -544,7 +544,7 @@ body[data-theme="light"] .sidebar-link.active {
 
 .kpi-icon-green {
   background: rgba(249, 115, 22, 0.16);
-  color: var(--tva-orange-400);
+  color: var(--timeline-orange-400);
 }
 
 .kpi-icon-amber {
@@ -997,7 +997,7 @@ body[data-theme="light"] .status-completed {
 .badge-era {
   font-size: 0.72rem;
   font-weight: 700;
-  color: var(--tva-orange-300);
+  color: var(--timeline-orange-300);
   background: rgba(249, 115, 22, 0.14);
   border: 1px solid rgba(249, 115, 22, 0.28);
   padding: 0.2rem 0.55rem;
@@ -1092,8 +1092,8 @@ body[data-theme="light"] .badge-era {
 
 .watch-check-btn:hover {
   background: rgba(249, 115, 22, 0.2);
-  border-color: var(--tva-orange-500);
-  color: var(--tva-orange-400);
+  border-color: var(--timeline-orange-500);
+  color: var(--timeline-orange-400);
 }
 
 .watch-check-btn.checked {
