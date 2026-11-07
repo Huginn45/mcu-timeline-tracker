@@ -186,18 +186,30 @@ body {
 }
 
 .logo-icon-wrap {
-  width: 38px;
-  height: 38px;
-  border-radius: var(--radius-sm);
-  background: linear-gradient(135deg, #f97316 0%, #c2410c 100%);
-  border: 1px solid rgba(254, 215, 170, 0.35);
+  width: 44px;
+  height: 44px;
+  border-radius: 50%;
+  background: transparent;
   display: flex;
   align-items: center;
   justify-content: center;
-  color: #fff;
-  font-weight: 900;
-  font-size: 1.15rem;
-  box-shadow: 0 4px 15px rgba(249, 115, 22, 0.45);
+  flex-shrink: 0;
+  box-shadow: 0 4px 18px rgba(249, 115, 22, 0.45);
+  transition: transform 0.25s cubic-bezier(0.16, 1, 0.3, 1), box-shadow 0.25s ease;
+  overflow: hidden;
+}
+
+.sidebar-logo:hover .logo-icon-wrap {
+  transform: rotate(6deg) scale(1.08);
+  box-shadow: 0 6px 24px rgba(249, 115, 22, 0.65);
+}
+
+.logo-img {
+  width: 100%;
+  height: 100%;
+  object-fit: cover;
+  border-radius: 50%;
+  display: block;
 }
 
 .logo-text {
