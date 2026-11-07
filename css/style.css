@@ -1,18 +1,35 @@
 /* ==========================================================================
-   GLASSDASH DESIGN SYSTEM - MCU TIMELINE TRACKER
-   Inspired by modern glassmorphic dashboard UI (Dark Emerald & Light Frost)
+   TVA SACRED TIMELINE DESIGN SYSTEM
+   Inspired by the Time Variance Authority aesthetic from Marvel Studios' Loki
+   (Temporal Loom Amber, 1970s Archival Bureaucracy & Retro-Futurism)
    ========================================================================== */
 
 :root {
-  /* Common Palette */
-  --emerald-400: #34d399;
-  --emerald-500: #10b981;
-  --emerald-600: #059669;
-  --emerald-glow: rgba(16, 185, 129, 0.25);
+  /* TVA Official Chromatic Palette */
+  --tva-orange-300: #fdba74;
+  --tva-orange-400: #fb923c;
+  --tva-orange-500: #f97316; /* Iconic TVA Seal Orange */
+  --tva-orange-600: #ea580c;
+  --tva-orange-700: #c2410c;
+  --tva-glow: rgba(249, 115, 22, 0.32);
+
+  --tva-gold-300: #fde047;
+  --tva-gold-400: #facc15;
+  --tva-gold-500: #eab308; /* Temporal Loom Gold */
+  --tva-gold-glow: rgba(234, 179, 8, 0.28);
+
+  --tva-bronze-500: #b45309;
+  --tva-brass-border: rgba(245, 158, 11, 0.25);
+
+  /* Primary Accent Colors Mapped to TVA Palette */
+  --emerald-400: #fb923c;
+  --emerald-500: #f97316;
+  --emerald-600: #ea580c;
+  --emerald-glow: rgba(249, 115, 22, 0.32);
   
-  --coral-400: #fb923c;
-  --coral-500: #f97316;
-  --coral-glow: rgba(249, 115, 22, 0.25);
+  --coral-400: #fde047;
+  --coral-500: #eab308;
+  --coral-glow: rgba(234, 179, 8, 0.28);
 
   --cyan-400: #38bdf8;
   --cyan-500: #06b6d4;
@@ -34,66 +51,65 @@
 }
 
 /* ==========================================================================
-   THEME: DARK GLASS (Default - Top Half of Reference Image)
+   THEME: TVA TEMPORAL LOOM (Dark Mode - Deep Walnut & Radiant Amber)
    ========================================================================== */
 body[data-theme="dark"],
 body:not([data-theme="light"]) {
-  --bg-app: #080d0b;
+  --bg-app: #0d0b08;
   --bg-gradient: 
-    radial-gradient(circle at 10% 15%, rgba(16, 185, 129, 0.08) 0%, transparent 45%),
-    radial-gradient(circle at 90% 65%, rgba(6, 182, 212, 0.05) 0%, transparent 50%),
-    radial-gradient(circle at 50% 90%, rgba(249, 115, 22, 0.04) 0%, transparent 45%),
-    linear-gradient(180deg, #090e0c 0%, #060a08 100%);
+    radial-gradient(circle at 12% 15%, rgba(249, 115, 22, 0.14) 0%, transparent 45%),
+    radial-gradient(circle at 88% 65%, rgba(234, 179, 8, 0.09) 0%, transparent 50%),
+    radial-gradient(circle at 50% 90%, rgba(180, 83, 9, 0.08) 0%, transparent 45%),
+    linear-gradient(180deg, #130f0b 0%, #090705 100%);
   
-  --glass-sidebar: rgba(10, 16, 13, 0.85);
-  --glass-card: rgba(16, 25, 21, 0.65);
-  --glass-card-hover: rgba(21, 33, 28, 0.8);
-  --glass-card-border: rgba(255, 255, 255, 0.07);
-  --glass-card-border-hover: rgba(16, 185, 129, 0.35);
-  --glass-input: rgba(255, 255, 255, 0.05);
+  --glass-sidebar: rgba(18, 14, 10, 0.88);
+  --glass-card: rgba(26, 20, 15, 0.72);
+  --glass-card-hover: rgba(36, 28, 20, 0.86);
+  --glass-card-border: rgba(249, 115, 22, 0.15);
+  --glass-card-border-hover: rgba(249, 115, 22, 0.48);
+  --glass-input: rgba(249, 115, 22, 0.06);
   
-  --text-main: #f8fafc;
-  --text-muted: #94a3b8;
-  --text-dim: #64748b;
-  --text-heading: #ffffff;
+  --text-main: #fef3c7;
+  --text-muted: #d4af37;
+  --text-dim: #a8a29e;
+  --text-heading: #fffbeb;
   
-  --sidebar-active-bg: rgba(255, 255, 255, 0.08);
-  --sidebar-active-text: #ffffff;
+  --sidebar-active-bg: rgba(249, 115, 22, 0.16);
+  --sidebar-active-text: #fed7aa;
   
-  --shadow-card: 0 10px 30px -5px rgba(0, 0, 0, 0.5), 0 0 1px 1px rgba(255, 255, 255, 0.05);
-  --shadow-glow: 0 0 25px rgba(16, 185, 129, 0.18);
-  --scrollbar-thumb: rgba(255, 255, 255, 0.12);
+  --shadow-card: 0 10px 30px -5px rgba(0, 0, 0, 0.65), 0 0 1px 1px rgba(249, 115, 22, 0.14);
+  --shadow-glow: 0 0 25px rgba(249, 115, 22, 0.25);
+  --scrollbar-thumb: rgba(249, 115, 22, 0.22);
 }
 
 /* ==========================================================================
-   THEME: LIGHT GLASS (Bottom Half of Reference Image)
+   THEME: TVA RECORDS & ARCHIVE (Light Mode - Warm Mid-century Manila & Brass)
    ========================================================================== */
 body[data-theme="light"] {
-  --bg-app: #f1f5f9;
+  --bg-app: #f6f1e8;
   --bg-gradient: 
-    radial-gradient(circle at 10% 15%, rgba(16, 185, 129, 0.1) 0%, transparent 45%),
-    radial-gradient(circle at 90% 25%, rgba(249, 115, 22, 0.08) 0%, transparent 45%),
-    radial-gradient(circle at 50% 85%, rgba(56, 189, 248, 0.08) 0%, transparent 50%),
-    linear-gradient(180deg, #f8fafc 0%, #eef2f6 100%);
+    radial-gradient(circle at 15% 15%, rgba(249, 115, 22, 0.1) 0%, transparent 45%),
+    radial-gradient(circle at 85% 75%, rgba(234, 179, 8, 0.08) 0%, transparent 50%),
+    linear-gradient(180deg, #fdfbf7 0%, #efe7da 100%);
   
-  --glass-sidebar: rgba(255, 255, 255, 0.75);
-  --glass-card: rgba(255, 255, 255, 0.78);
-  --glass-card-hover: rgba(255, 255, 255, 0.95);
-  --glass-card-border: rgba(255, 255, 255, 0.9);
-  --glass-card-border-hover: rgba(16, 185, 129, 0.45);
-  --glass-input: rgba(255, 255, 255, 0.9);
+  --glass-sidebar: rgba(253, 249, 241, 0.86);
+  --glass-card: rgba(255, 253, 248, 0.88);
+  --glass-card-hover: rgba(255, 255, 255, 0.96);
+  --glass-card-border: rgba(217, 119, 6, 0.22);
+  --glass-card-border-hover: rgba(249, 115, 22, 0.55);
+  --glass-input: rgba(255, 255, 255, 0.95);
   
-  --text-main: #1e293b;
-  --text-muted: #64748b;
-  --text-dim: #94a3b8;
-  --text-heading: #0f172a;
+  --text-main: #292524;
+  --text-muted: #78716c;
+  --text-dim: #a8a29e;
+  --text-heading: #1c1917;
   
   --sidebar-active-bg: #ffffff;
-  --sidebar-active-text: #0f172a;
+  --sidebar-active-text: #c2410c;
   
-  --shadow-card: 0 10px 25px -3px rgba(0, 0, 0, 0.04), 0 4px 6px -2px rgba(0, 0, 0, 0.02);
-  --shadow-glow: 0 0 25px rgba(16, 185, 129, 0.15);
-  --scrollbar-thumb: rgba(0, 0, 0, 0.15);
+  --shadow-card: 0 10px 25px -3px rgba(120, 53, 15, 0.06), 0 4px 6px -2px rgba(120, 53, 15, 0.03);
+  --shadow-glow: 0 0 25px rgba(249, 115, 22, 0.18);
+  --scrollbar-thumb: rgba(180, 83, 9, 0.22);
 }
 
 /* Base & Reset */
@@ -170,17 +186,18 @@ body {
 }
 
 .logo-icon-wrap {
-  width: 36px;
-  height: 36px;
+  width: 38px;
+  height: 38px;
   border-radius: var(--radius-sm);
-  background: linear-gradient(135deg, #10b981 0%, #059669 100%);
+  background: linear-gradient(135deg, #f97316 0%, #c2410c 100%);
+  border: 1px solid rgba(254, 215, 170, 0.35);
   display: flex;
   align-items: center;
   justify-content: center;
   color: #fff;
   font-weight: 900;
   font-size: 1.15rem;
-  box-shadow: 0 4px 12px var(--emerald-glow);
+  box-shadow: 0 4px 15px rgba(249, 115, 22, 0.45);
 }
 
 .logo-text {
@@ -435,14 +452,14 @@ body[data-theme="light"] .sidebar-link.active {
 }
 
 .btn-primary-green {
-  background: linear-gradient(135deg, #10b981 0%, #059669 100%);
+  background: linear-gradient(135deg, var(--tva-orange-500) 0%, var(--tva-orange-600) 100%);
   color: #fff;
   border: 1px solid rgba(255, 255, 255, 0.2);
-  box-shadow: 0 4px 15px var(--emerald-glow);
+  box-shadow: 0 4px 15px var(--tva-glow);
 }
 .btn-primary-green:hover {
-  background: linear-gradient(135deg, #059669 0%, #047857 100%);
-  box-shadow: 0 6px 20px rgba(16, 185, 129, 0.4);
+  background: linear-gradient(135deg, var(--tva-orange-600) 0%, var(--tva-orange-700) 100%);
+  box-shadow: 0 6px 20px rgba(249, 115, 22, 0.45);
   transform: translateY(-1px);
 }
 
@@ -514,8 +531,8 @@ body[data-theme="light"] .sidebar-link.active {
 }
 
 .kpi-icon-green {
-  background: rgba(16, 185, 129, 0.15);
-  color: var(--emerald-400);
+  background: rgba(249, 115, 22, 0.16);
+  color: var(--tva-orange-400);
 }
 
 .kpi-icon-amber {
@@ -565,8 +582,8 @@ body[data-theme="light"] .sidebar-link.active {
 }
 
 .kpi-trend-green {
-  background: rgba(16, 185, 129, 0.15);
-  color: #34d399;
+  background: rgba(249, 115, 22, 0.16);
+  color: #fb923c;
 }
 
 .kpi-trend-amber {
@@ -887,7 +904,7 @@ body[data-theme="light"] .glass-table tr:hover td {
 }
 
 /* Avatar Colors like screenshot */
-.avatar-emerald { background: linear-gradient(135deg, #10b981 0%, #059669 100%); }
+.avatar-emerald { background: linear-gradient(135deg, #f97316 0%, #c2410c 100%); }
 .avatar-amber   { background: linear-gradient(135deg, #f59e0b 0%, #d97706 100%); }
 .avatar-cyan    { background: linear-gradient(135deg, #06b6d4 0%, #0891b2 100%); }
 .avatar-coral   { background: linear-gradient(135deg, #f97316 0%, #ea580c 100%); }
@@ -927,21 +944,21 @@ body[data-theme="light"] .glass-table tr:hover td {
 }
 
 .status-completed {
-  background: rgba(16, 185, 129, 0.15);
-  color: #34d399;
-  border: 1px solid rgba(16, 185, 129, 0.3);
+  background: rgba(249, 115, 22, 0.16);
+  color: #fb923c;
+  border: 1px solid rgba(249, 115, 22, 0.35);
 }
 
 body[data-theme="light"] .status-completed {
-  background: rgba(16, 185, 129, 0.15);
-  color: #059669;
-  border-color: rgba(16, 185, 129, 0.25);
+  background: rgba(249, 115, 22, 0.15);
+  color: #c2410c;
+  border-color: rgba(249, 115, 22, 0.3);
 }
 
 .status-unwatched {
-  background: rgba(249, 115, 22, 0.12);
-  color: #fb923c;
-  border: 1px solid rgba(249, 115, 22, 0.25);
+  background: rgba(255, 255, 255, 0.05);
+  color: var(--text-dim);
+  border: 1px solid rgba(255, 255, 255, 0.1);
 }
 
 /* Badges */
@@ -968,9 +985,9 @@ body[data-theme="light"] .status-completed {
 .badge-era {
   font-size: 0.72rem;
   font-weight: 700;
-  color: var(--emerald-400);
-  background: rgba(16, 185, 129, 0.12);
-  border: 1px solid rgba(16, 185, 129, 0.25);
+  color: var(--tva-orange-300);
+  background: rgba(249, 115, 22, 0.14);
+  border: 1px solid rgba(249, 115, 22, 0.28);
   padding: 0.2rem 0.55rem;
   border-radius: 4px;
   display: inline-flex;
@@ -980,9 +997,9 @@ body[data-theme="light"] .status-completed {
 }
 
 body[data-theme="light"] .badge-era {
-  background: rgba(16, 185, 129, 0.15);
-  color: #047857;
-  border-color: rgba(16, 185, 129, 0.35);
+  background: rgba(249, 115, 22, 0.12);
+  color: #c2410c;
+  border-color: rgba(249, 115, 22, 0.3);
 }
 
 .badge-expanded {
@@ -1005,9 +1022,9 @@ body[data-theme="light"] .badge-era {
 }
 
 .badge-type.movie {
-  background: rgba(16, 185, 129, 0.15);
-  color: #34d399;
-  border: 1px solid rgba(16, 185, 129, 0.25);
+  background: rgba(234, 179, 8, 0.16);
+  color: #facc15;
+  border: 1px solid rgba(234, 179, 8, 0.3);
 }
 
 .badge-type.series {
@@ -1062,9 +1079,9 @@ body[data-theme="light"] .badge-era {
 }
 
 .watch-check-btn:hover {
-  background: rgba(16, 185, 129, 0.18);
-  border-color: var(--emerald-500);
-  color: var(--emerald-400);
+  background: rgba(249, 115, 22, 0.2);
+  border-color: var(--tva-orange-500);
+  color: var(--tva-orange-400);
 }
 
 .watch-check-btn.checked {
@@ -1192,7 +1209,7 @@ body[data-theme="light"] .star-btn {
 }
 
 .card.watched {
-  border-color: rgba(16, 185, 129, 0.35);
+  border-color: rgba(249, 115, 22, 0.4);
 }
 
 .card.watched::before {
@@ -1497,8 +1514,8 @@ body[data-theme="light"] .star-btn {
    REALTIME LIVE UPDATE BANNER & SYNC STYLING
    ========================================================================== */
 .update-toast-banner {
-  background: linear-gradient(135deg, rgba(16, 185, 129, 0.18), rgba(6, 78, 59, 0.25));
-  border: 1px solid rgba(16, 185, 129, 0.4);
+  background: linear-gradient(135deg, rgba(249, 115, 22, 0.2), rgba(120, 53, 15, 0.35));
+  border: 1px solid rgba(249, 115, 22, 0.45);
   backdrop-filter: blur(16px);
   -webkit-backdrop-filter: blur(16px);
   border-radius: var(--radius-md);
@@ -1508,7 +1525,7 @@ body[data-theme="light"] .star-btn {
   align-items: center;
   justify-content: space-between;
   gap: 1rem;
-  box-shadow: 0 4px 20px rgba(16, 185, 129, 0.15);
+  box-shadow: 0 4px 20px rgba(249, 115, 22, 0.22);
   animation: slideDownBanner 0.4s cubic-bezier(0.16, 1, 0.3, 1);
 }
 

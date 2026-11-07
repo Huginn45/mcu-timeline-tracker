@@ -25,9 +25,9 @@ The sidebar navigation has been streamlined for fast marathon browsing:
 
 ## ✨ Features
 
-- **GlassDash Design System & Dual Themes**:
-  - **Dark Emerald Glass** (Obsidian `#080d0b` background with glowing emerald accents and translucent frosted cards).
-  - **Light Frost Glass** (Clean slate `#f1f5f9` with mint jade accents and frosted white glass).
+- **TVA Sacred Timeline Design System & Dual Themes**:
+  - **⏳ Temporal Loom Mode (Dark)**: Deep walnut obsidian (`#0d0b08`) command room background, glowing amber-orange (`#f97316`) temporal thread accents, brass borders, and translucent frosted cards.
+  - **📜 TVA Archive Mode (Light)**: Warm mid-century 1970s archival paper (`#f6f1e8`), manila records styling, and deep mahogany borders.
   - One-click theme toggle in the sidebar with instant `localStorage` persistence.
 - **Fixed Sidebar Navigation & Breadcrumbs**: Left navigation panel with streamlined filters (`All Timeline`, `Films`, `TV Series`), plus tools and backup controls.
 - **4 KPI Metric Cards**: Visual top row showing Total Watched progress percentage, Feature Films, TV Series & Specials, and Infinity vs. Multiverse Saga counters with colored icon bubbles.

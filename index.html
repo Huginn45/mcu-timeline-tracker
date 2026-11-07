@@ -9,23 +9,29 @@
   <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
   <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700;800;900&display=swap" rel="stylesheet">
   <link rel="stylesheet" href="css/style.css">
-  <link rel="icon" href="data:image/svg+xml,<svg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 100 100'><rect width='100' height='100' rx='20' fill='%2310b981'/><text x='50%' y='68%' font-size='46' font-weight='900' fill='white' font-family='Arial, sans-serif' text-anchor='middle'>ST</text></svg>">
+  <link rel="icon" href="data:image/svg+xml,<svg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 100 100'><circle cx='50' cy='50' r='46' fill='%230d0b08' stroke='%23f97316' stroke-width='6'/><polygon points='34,26 66,26 34,74 66,74' fill='%23f97316'/><line x1='50' y1='16' x2='50' y2='84' stroke='%23f97316' stroke-width='6'/></svg>">
 </head>
 <body data-theme="dark">
 
   <div class="app-layout">
 
     <!-- ====================================================================
-         LEFT SIDEBAR NAVIGATION (Sacred Timeline Dash)
+         LEFT SIDEBAR NAVIGATION (TVA Sacred Timeline Terminal)
          ==================================================================== -->
     <aside class="glass-sidebar" id="sidebar">
       <div>
-        <!-- Logo -->
+        <!-- Logo (TVA Sacred Timeline Emblem) -->
         <a href="#" class="sidebar-logo">
-          <div class="logo-icon-wrap" style="font-size:0.95rem; font-weight:900; letter-spacing:-0.5px;">ST</div>
+          <div class="logo-icon-wrap" title="Time Variance Authority • For All Time. Always.">
+            <svg viewBox="0 0 100 100" width="22" height="22" fill="none" stroke="currentColor" stroke-width="7" stroke-linecap="round" stroke-linejoin="round">
+              <circle cx="50" cy="50" r="44" stroke="#ffffff" stroke-width="6"/>
+              <polygon points="32,28 68,28 32,72 68,72" fill="rgba(255,255,255,0.3)" stroke="#ffffff" stroke-width="6"/>
+              <line x1="50" y1="18" x2="50" y2="82" stroke="#ffffff" stroke-width="6"/>
+            </svg>
+          </div>
           <div class="logo-text">
-            <h2>Sacred Timeline</h2>
-            <span>MCU Viewing Guide</span>
+            <h2>TVA • SACRED</h2>
+            <span>For All Time. Always.</span>
           </div>
         </a>
 
@@ -35,8 +41,8 @@
           <li class="sidebar-nav-item">
             <button class="sidebar-link active" data-nav-filter="all">
               <span class="sidebar-link-content">
-                <span class="nav-icon">⊞</span>
-                <span>All Timeline</span>
+                <span class="nav-icon">⌛</span>
+                <span>The Sacred Timeline</span>
               </span>
               <span class="sidebar-pill-badge" id="badge-count-all">84</span>
             </button>
@@ -64,13 +70,13 @@
 
       <!-- Utilities & Controls Section at Bottom -->
       <div class="sidebar-footer">
-        <div class="sidebar-section-title" style="padding-left:0.5rem; margin-top:0;">Account &amp; Tools</div>
+        <div class="sidebar-section-title" style="padding-left:0.5rem; margin-top:0;">TVA Archives &amp; Tools</div>
         <ul class="sidebar-nav">
           <li class="sidebar-nav-item">
             <button class="sidebar-link" id="check-updates-btn">
               <span class="sidebar-link-content">
                 <span class="nav-icon" id="sync-icon">🔄</span>
-                <span id="sync-label">Check for Updates</span>
+                <span id="sync-label">Sync Timeline</span>
               </span>
               <span class="sidebar-pill-badge green" id="sync-badge" style="display:none;">New</span>
             </button>
@@ -78,8 +84,8 @@
           <li class="sidebar-nav-item">
             <button class="sidebar-link" id="theme-toggle-btn">
               <span class="sidebar-link-content">
-                <span class="nav-icon" id="theme-icon">☀️</span>
-                <span id="theme-label">Light Glass Mode</span>
+                <span class="nav-icon" id="theme-icon">📜</span>
+                <span id="theme-label">TVA Archive Mode</span>
               </span>
             </button>
           </li>
@@ -120,7 +126,7 @@
       <header class="topbar">
         <div class="topbar-header">
           <div class="breadcrumb">
-            <span>Dashboard</span>
+            <span>TVA Terminal</span>
             <span>/</span>
             <span id="current-scope-breadcrumb">The Sacred Timeline</span>
           </div>
@@ -131,7 +137,7 @@
           <!-- Glass Search Box -->
           <div class="search-pill-box">
             <span class="search-pill-icon">🔍</span>
-            <input type="text" id="search-input" class="search-pill-input" placeholder="Search anything..." autocomplete="off">
+            <input type="text" id="search-input" class="search-pill-input" placeholder="Search TVA timeline records..." autocomplete="off">
             <button id="clear-search-btn" class="clear-search-btn" title="Clear search">✕</button>
           </div>
 
@@ -166,13 +172,13 @@
         <!-- KPI 1: Overall Progress -->
         <div class="kpi-card">
           <div class="kpi-card-header">
-            <span class="kpi-title">Total Watched</span>
-            <div class="kpi-icon-bubble kpi-icon-green">👁️</div>
+            <span class="kpi-title">Timeline Maintained</span>
+            <div class="kpi-icon-bubble kpi-icon-green">⌛</div>
           </div>
           <div class="kpi-value-row">
             <div class="kpi-number">
               <span id="total-watched-count">0</span>
-              <small>/ <span id="total-items-count">100</span></small>
+              <small>/ <span id="total-items-count">84</span></small>
             </div>
             <span class="kpi-trend-pill kpi-trend-green" id="total-percent-text">+0.0%</span>
           </div>
@@ -186,26 +192,26 @@
           </div>
           <div class="kpi-value-row">
             <div class="kpi-number" id="stat-movies">0 <small>/ 0</small></div>
-            <span class="kpi-trend-pill kpi-trend-amber" id="stat-movies-trend">Movies</span>
+            <span class="kpi-trend-pill kpi-trend-amber" id="stat-movies-trend">Films</span>
           </div>
         </div>
 
         <!-- KPI 3: TV Seasons -->
         <div class="kpi-card">
           <div class="kpi-card-header">
-            <span class="kpi-title">TV Seasons</span>
+            <span class="kpi-title">Series &amp; Episodic</span>
             <div class="kpi-icon-bubble kpi-icon-cyan">📺</div>
           </div>
           <div class="kpi-value-row">
             <div class="kpi-number" id="stat-series">0 <small>/ 0</small></div>
-            <span class="kpi-trend-pill kpi-trend-green" id="stat-series-trend">Series</span>
+            <span class="kpi-trend-pill kpi-trend-green" id="stat-series-trend">Episodic</span>
           </div>
         </div>
 
         <!-- KPI 4: Specials & Sagas -->
         <div class="kpi-card">
           <div class="kpi-card-header">
-            <span class="kpi-title">Infinity / Multiverse</span>
+            <span class="kpi-title">Sagas Maintained</span>
             <div class="kpi-icon-bubble kpi-icon-purple">🌌</div>
           </div>
           <div class="kpi-value-row">
@@ -214,7 +220,7 @@
               <small style="margin: 0 4px;">•</small>
               <span id="stat-multiverse">0/0</span>
             </div>
-            <span class="kpi-trend-pill kpi-trend-green">Sagas</span>
+            <span class="kpi-trend-pill kpi-trend-green">Infinity • Multiverse</span>
           </div>
         </div>
       </section>

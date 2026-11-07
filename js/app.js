@@ -144,22 +144,22 @@
   }
 
   /**
-   * Theme Switcher (Dark Emerald Glass vs Light Frost Glass)
+   * Theme Switcher (Temporal Loom Dark Mode vs TVA Archival Paper Light Mode)
    */
   function setTheme(theme) {
     state.theme = theme;
     document.body.setAttribute('data-theme', theme);
     if (elements.themeIcon && elements.themeLabel) {
       if (theme === 'light') {
-        elements.themeIcon.textContent = '🌙';
-        elements.themeLabel.textContent = 'Dark Glass Mode';
+        elements.themeIcon.textContent = '⏳';
+        elements.themeLabel.textContent = 'Temporal Loom Mode';
       } else {
-        elements.themeIcon.textContent = '☀️';
-        elements.themeLabel.textContent = 'Light Glass Mode';
+        elements.themeIcon.textContent = '📜';
+        elements.themeLabel.textContent = 'TVA Archive Mode';
       }
     }
     saveState();
-    showToast(`Switched to ${theme === 'light' ? 'Light Frost' : 'Dark Emerald'} Glass Theme`, 'info');
+    showToast(`Switched to ${theme === 'light' ? 'TVA Archive' : 'Temporal Loom'} Mode`, 'info');
   }
 
   function toggleTheme() {
@@ -460,15 +460,15 @@
 
     if (!nextItem) {
       elements.upNextSection.innerHTML = `
-        <div class="up-next-glass-panel" style="border-color: var(--emerald-500); background: rgba(16, 185, 129, 0.08);">
+        <div class="up-next-glass-panel" style="border-color: var(--tva-orange-500); background: rgba(249, 115, 22, 0.1);">
           <div class="up-next-inner">
             <div>
               <div class="up-next-tag-row">
-                <span class="up-next-indicator" style="color:var(--emerald-400);">🏆 MARATHON COMPLETE</span>
+                <span class="up-next-indicator" style="color:var(--tva-orange-400);">🏆 SACRED TIMELINE FULLY STABILIZED</span>
               </div>
-              <h3 class="up-next-title-text">You have completed all titles in this view!</h3>
+              <h3 class="up-next-title-text">All timeline branches are secured &amp; monitored!</h3>
               <p class="up-next-desc-text">
-                All ${scoped.length} titles in the active universe view have been watched.
+                All ${scoped.length} canonical titles in the active universe view have been verified.
               </p>
             </div>
           </div>
@@ -482,7 +482,7 @@
         <div class="up-next-inner">
           <div style="flex:1; min-width:280px;">
             <div class="up-next-tag-row">
-              <span class="up-next-indicator">Up Next in Timeline</span>
+              <span class="up-next-indicator">Temporal Loom Monitor • Up Next</span>
               <span class="badge-glass-order">#${nextItem.order}</span>
               <span class="badge-era" title="${nextItem.bookNote || ''}">📖 ${nextItem.timelineEra}</span>
               <span class="badge-canon">Disney+ &amp; Book</span>
@@ -554,12 +554,12 @@
       <div class="table-container-card">
         <div class="table-glass-header">
           <div>
-            <h3>Official MCU Sacred Timeline</h3>
+            <h3>TVA Sacred Timeline Archive</h3>
             <span style="display:inline-flex; align-items:center; gap:0.35rem; color:var(--text-muted);">
               Codified by Disney+ &amp; Marvel Studios: An Official Timeline (DK Books)
             </span>
           </div>
-          <span style="font-size:0.75rem; font-weight:700; color:var(--emerald-400); background:rgba(16,185,129,0.12); padding:0.25rem 0.65rem; border-radius:12px;">
+          <span style="font-size:0.75rem; font-weight:700; color:var(--tva-orange-400); background:rgba(249,115,22,0.15); padding:0.25rem 0.65rem; border-radius:12px;">
             ${items.length} Titles
           </span>
         </div>
@@ -1205,11 +1205,11 @@
     document.body.setAttribute('data-theme', state.theme);
     if (elements.themeIcon && elements.themeLabel) {
       if (state.theme === 'light') {
-        elements.themeIcon.textContent = '🌙';
-        elements.themeLabel.textContent = 'Dark Glass Mode';
+        elements.themeIcon.textContent = '⏳';
+        elements.themeLabel.textContent = 'Temporal Loom Mode';
       } else {
-        elements.themeIcon.textContent = '☀️';
-        elements.themeLabel.textContent = 'Light Glass Mode';
+        elements.themeIcon.textContent = '📜';
+        elements.themeLabel.textContent = 'TVA Archive Mode';
       }
     }
 
