@@ -1,8 +1,8 @@
 /**
- * MCUDash - GlassDash UI Application Logic
+ * The Sacred Timeline - Official Marvel Studios Cinematic Universe Tracker
  * Supports:
- * - Official Marvel Studios Sacred Timeline (Disney+ & Official DK Timeline Book)
- * - 84 Verified Canon Titles (Zero non-canon expanded fluff)
+ * - Official Sacred Timeline (Disney+ & Official DK Timeline Book)
+ * - 84 Verified Canon Titles
  * - Streamlined Sidebar Navigation: All Timeline, Films, and TV Series
  * - In-Universe Timeline Eras & Chronological Milestones
  * - GlassDash UI with Dark Emerald & Light Frost themes
@@ -193,8 +193,8 @@
         elements.currentScopeBreadcrumb.textContent = 'TV Series & Specials';
         elements.pageHeading.textContent = 'MCU Series & Specials';
       } else {
-        elements.currentScopeBreadcrumb.textContent = 'All Timeline';
-        elements.pageHeading.textContent = 'Official MCU Sacred Timeline';
+        elements.currentScopeBreadcrumb.textContent = 'The Sacred Timeline';
+        elements.pageHeading.textContent = 'The Sacred Timeline';
       }
     }
 
@@ -873,7 +873,7 @@
    */
   function exportData() {
     const exportObject = {
-      app: 'MCUDash',
+      app: 'The Sacred Timeline',
       version: '4.0.0',
       exportedAt: new Date().toISOString(),
       canonSource: 'Disney+ & Marvel Studios: An Official Timeline (DK Books)',
@@ -893,7 +893,7 @@
     const url = URL.createObjectURL(blob);
     const a = document.createElement('a');
     a.href = url;
-    a.download = `GlassMCU_Backup_${new Date().toISOString().slice(0, 10)}.json`;
+    a.download = `Sacred_Timeline_Backup_${new Date().toISOString().slice(0, 10)}.json`;
     document.body.appendChild(a);
     a.click();
     document.body.removeChild(a);

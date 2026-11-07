@@ -1,7 +1,7 @@
 {
-  "name": "mcu-timeline-tracker",
-  "version": "2.0.0",
-  "description": "GlassDash MCU Timeline Tracker & Marathon Progress Checker",
+  "name": "sacred-timeline",
+  "version": "4.0.0",
+  "description": "The Sacred Timeline - Official Marvel Studios Cinematic Universe Tracker & Marathon Progress Checker",
   "main": "js/app.js",
   "scripts": {
     "sync": "node scripts/sync-timeline.js",
@@ -9,12 +9,13 @@
     "test": "node scripts/sync-timeline.js --check"
   },
   "keywords": [
+    "sacred-timeline",
     "mcu",
     "marvel",
+    "marvel-studios",
     "timeline",
     "tracker",
     "disney-plus",
-    "imdb",
     "glassmorphism"
   ],
   "author": "Wesley",

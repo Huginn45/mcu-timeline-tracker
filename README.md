@@ -1,4 +1,4 @@
-# GlassMCU | Official MCU Sacred Timeline Tracker & Checker 🛡️⚡
+# The Sacred Timeline | Official MCU Marathon Tracker ⏳🛡️
 
 An interactive, glassmorphic web application that tracks and checks off your Marvel Cinematic Universe marathon viewing progress using the **Official Marvel Studios Sacred Timeline** codified by **[Marvel Studios: The Marvel Cinematic Universe - An Official Timeline](https://en.wikipedia.org/wiki/Marvel_Studios:_The_Marvel_Cinematic_Universe:_An_Official_Timeline)** (DK Books) and **[Disney+ Official Timeline Order](https://www.marvel.com/articles/movies/mcu-timeline-order-disney-plus)**.
 
