@@ -82,6 +82,15 @@
             </button>
           </li>
           <li class="sidebar-nav-item">
+            <button class="sidebar-link" id="cloud-sync-btn">
+              <span class="sidebar-link-content">
+                <span class="nav-icon">☁️</span>
+                <span>Cloud Sync &amp; Share</span>
+              </span>
+              <span class="sidebar-pill-badge amber" id="cloud-status-badge" style="display:none;">Cloud</span>
+            </button>
+          </li>
+          <li class="sidebar-nav-item">
             <button class="sidebar-link" id="theme-toggle-btn">
               <span class="sidebar-link-content">
                 <span class="nav-icon" id="theme-icon">📜</span>
@@ -338,6 +347,69 @@
       <div class="modal-footer">
         <button class="btn-glass close-import-modal">Cancel</button>
         <button class="btn-glass btn-primary-green" id="import-submit-btn">Restore Progress</button>
+      </div>
+    </div>
+  </div>
+
+  <!-- Modal: Cloud Sync & Share (Vercel KV) -->
+  <div class="modal-backdrop" id="cloud-modal" role="dialog" aria-modal="true">
+    <div class="modal" style="max-width: 520px;">
+      <div class="modal-header">
+        <h3 class="modal-title">☁️ Cloud Sync &amp; Share</h3>
+        <button class="modal-close-btn close-cloud-modal" aria-label="Close modal">✕</button>
+      </div>
+      <div class="modal-body">
+        
+        <!-- Active Key Display -->
+        <div style="background: rgba(255,255,255,0.03); border: 1px solid var(--glass-card-border); border-radius: var(--radius-sm); padding: 1rem; margin-bottom: 1.25rem;">
+          <div style="display:flex; justify-content:space-between; align-items:center; margin-bottom: 0.5rem;">
+            <span style="font-size:0.72rem; text-transform:uppercase; font-weight:700; color:var(--text-muted); letter-spacing:0.5px;">Your Cloud Sync Key</span>
+            <span id="cloud-last-synced" style="font-size:0.75rem; color:var(--text-dim);">Not synced yet</span>
+          </div>
+          <div style="display:flex; align-items:center; gap:0.5rem;">
+            <input type="text" id="cloud-key-display" class="form-input" style="font-family:var(--font-mono); font-weight:700; font-size:1.05rem; letter-spacing:1px; text-transform:uppercase;" readonly value="Click 'Backup to Cloud' below">
+            <button class="btn-glass" id="btn-copy-sync-key" title="Copy Key" style="flex-shrink:0;">📋</button>
+          </div>
+          <div style="display:flex; gap:0.5rem; margin-top:0.75rem;">
+            <button class="btn-glass btn-primary-green" id="btn-cloud-upload" style="flex:1;">
+              ☁️ Backup to Cloud
+            </button>
+            <button class="btn-glass" id="btn-copy-share-link" style="flex:1;" title="Copy shareable link for friends">
+              🔗 Share Link
+            </button>
+          </div>
+        </div>
+
+        <!-- Link Another Device -->
+        <div class="form-group" style="margin-bottom: 1.25rem;">
+          <label class="form-label" for="cloud-link-input">Link Another Device / Load from Cloud</label>
+          <div style="display:flex; gap:0.5rem;">
+            <input type="text" id="cloud-link-input" class="form-input" placeholder="Enter key (e.g. ST-7K9A2)" style="font-family:var(--font-mono); text-transform:uppercase;">
+            <button class="btn-glass" id="btn-cloud-download" style="flex-shrink:0; font-weight:600;">
+              📥 Restore
+            </button>
+          </div>
+          <span style="font-size:0.75rem; color:var(--text-dim); display:block; margin-top:0.35rem;">
+            Entering an existing Sync Key links this device and loads your saved watchlist.
+          </span>
+        </div>
+
+        <!-- Auto-Sync Checkbox -->
+        <div style="display:flex; align-items:center; gap:0.6rem; margin-bottom: 1rem;">
+          <input type="checkbox" id="cloud-auto-sync-check" style="cursor:pointer; width:16px; height:16px;">
+          <label for="cloud-auto-sync-check" style="font-size:0.84rem; color:var(--text-main); cursor:pointer;">
+            Automatically sync changes to cloud when progress is updated
+          </label>
+        </div>
+
+        <!-- Status notice / connection info -->
+        <div id="cloud-modal-status" style="font-size:0.78rem; line-height:1.4; color:var(--text-dim); border-top:1px solid var(--glass-card-border); padding-top:0.85rem;">
+          💡 <strong>Powered by Vercel KV</strong>: Seamlessly backup and sync your Marvel marathon progress across phone, tablet, and PC.
+        </div>
+
+      </div>
+      <div class="modal-footer">
+        <button class="btn-glass close-cloud-modal">Done</button>
       </div>
     </div>
   </div>

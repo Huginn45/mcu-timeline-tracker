@@ -29,7 +29,10 @@
     filterStatus: 'all',
     sortBy: 'chronological', // 'chronological', 'release', 'title'
     viewMode: 'table', // 'table' (default, matches screenshot) | 'grid'
-    activeNoteId: null
+    activeNoteId: null,
+    cloudKey: localStorage.getItem('mcu_cloud_sync_key') || null,
+    cloudLastSynced: localStorage.getItem('mcu_cloud_last_synced') || null,
+    autoSync: localStorage.getItem('mcu_cloud_auto_sync') === 'true'
   };
 
   // DOM Elements cache
@@ -111,7 +114,22 @@
     updateToastBanner: document.getElementById('update-toast-banner'),
     updateToastText: document.getElementById('update-toast-text'),
     updateToastViewBtn: document.getElementById('update-toast-view-btn'),
-    updateToastDismissBtn: document.getElementById('update-toast-dismiss-btn')
+    updateToastDismissBtn: document.getElementById('update-toast-dismiss-btn'),
+
+    // Cloud Sync (Vercel KV)
+    cloudSyncBtn: document.getElementById('cloud-sync-btn'),
+    cloudStatusBadge: document.getElementById('cloud-status-badge'),
+    cloudModal: document.getElementById('cloud-modal'),
+    cloudKeyDisplay: document.getElementById('cloud-key-display'),
+    cloudLastSynced: document.getElementById('cloud-last-synced'),
+    btnCopySyncKey: document.getElementById('btn-copy-sync-key'),
+    btnCopyShareLink: document.getElementById('btn-copy-share-link'),
+    btnCloudUpload: document.getElementById('btn-cloud-upload'),
+    cloudLinkInput: document.getElementById('cloud-link-input'),
+    btnCloudDownload: document.getElementById('btn-cloud-download'),
+    cloudAutoSyncCheck: document.getElementById('cloud-auto-sync-check'),
+    cloudModalStatus: document.getElementById('cloud-modal-status'),
+    cloudCloseBtns: document.querySelectorAll('.close-cloud-modal')
   };
 
   /**
@@ -245,6 +263,7 @@
         sortBy: state.sortBy
       };
       localStorage.setItem(STORAGE_KEY, JSON.stringify(dataToSave));
+      triggerAutoSyncDebounced();
     } catch (e) {
       console.error('Failed to save state to localStorage:', e);
     }
@@ -934,6 +953,218 @@
     elements.confirmModal.classList.remove('active');
   }
 
+  /**
+   * =========================================================================
+   * CLOUD SYNC & DEVICE SHARING (Vercel KV)
+   * =========================================================================
+   */
+
+  let autoSyncTimeout = null;
+
+  function updateCloudBadge() {
+    if (!elements.cloudStatusBadge) return;
+    if (state.cloudKey) {
+      elements.cloudStatusBadge.style.display = 'inline-block';
+      elements.cloudStatusBadge.textContent = state.cloudKey;
+      elements.cloudStatusBadge.title = `Linked to Cloud Key: ${state.cloudKey}`;
+    } else {
+      elements.cloudStatusBadge.style.display = 'none';
+    }
+  }
+
+  function openCloudModal() {
+    if (!elements.cloudModal) return;
+
+    if (state.cloudKey) {
+      elements.cloudKeyDisplay.value = state.cloudKey;
+      elements.cloudLastSynced.textContent = state.cloudLastSynced 
+        ? `Last synced: ${new Date(state.cloudLastSynced).toLocaleTimeString([], { hour: '2-digit', minute: '2-digit' })}`
+        : 'Synced to cloud';
+    } else {
+      elements.cloudKeyDisplay.value = 'Click "Backup to Cloud" below';
+      elements.cloudLastSynced.textContent = 'Not linked yet';
+    }
+
+    if (elements.cloudAutoSyncCheck) {
+      elements.cloudAutoSyncCheck.checked = state.autoSync;
+    }
+
+    elements.cloudModal.classList.add('active');
+  }
+
+  function closeCloudModal() {
+    if (elements.cloudModal) {
+      elements.cloudModal.classList.remove('active');
+    }
+  }
+
+  async function uploadToCloud(showToastFeedback = true) {
+    const uploadBtn = elements.btnCloudUpload;
+    if (uploadBtn) {
+      uploadBtn.disabled = true;
+      uploadBtn.textContent = '☁️ Backing up...';
+    }
+
+    const payload = {
+      key: state.cloudKey || 'NEW',
+      data: {
+        watched: Array.from(state.watched),
+        ratings: state.ratings,
+        notes: state.notes,
+        datesWatched: state.datesWatched
+      }
+    };
+
+    try {
+      const res = await fetch('/api/sync', {
+        method: 'POST',
+        headers: { 'Content-Type': 'application/json' },
+        body: JSON.stringify(payload)
+      });
+
+      const result = await res.json();
+
+      if (!res.ok) {
+        throw new Error(result.error || 'Failed to upload timeline to cloud.');
+      }
+
+      state.cloudKey = result.key;
+      state.cloudLastSynced = result.updatedAt;
+      localStorage.setItem('mcu_cloud_sync_key', result.key);
+      localStorage.setItem('mcu_cloud_last_synced', result.updatedAt);
+
+      updateCloudBadge();
+      if (elements.cloudKeyDisplay) elements.cloudKeyDisplay.value = result.key;
+      if (elements.cloudLastSynced) elements.cloudLastSynced.textContent = 'Last synced: Just now';
+
+      if (showToastFeedback) {
+        showToast(`✓ Cloud Backup saved! Key: ${result.key}`, 'success');
+      }
+    } catch (err) {
+      console.warn('Cloud sync error:', err.message);
+      if (showToastFeedback) {
+        showToast(err.message, 'warning');
+      }
+      if (elements.cloudModalStatus && err.message.includes('Vercel KV')) {
+        elements.cloudModalStatus.innerHTML = `⚠️ <strong>Vercel KV not connected</strong>: In your Vercel Dashboard, go to <em>Storage</em> &rarr; <em>Create Database</em> &rarr; <em>KV</em> to enable cloud sync.`;
+      }
+    } finally {
+      if (uploadBtn) {
+        uploadBtn.disabled = false;
+        uploadBtn.textContent = '☁️ Backup to Cloud';
+      }
+    }
+  }
+
+  async function downloadFromCloud(keyToFetch, isUrlLoad = false) {
+    const downloadBtn = elements.btnCloudDownload;
+    const cleanKey = (keyToFetch || '').trim().toUpperCase();
+
+    if (!cleanKey) {
+      showToast('Please enter a valid Sync Key.', 'warning');
+      return;
+    }
+
+    if (downloadBtn) {
+      downloadBtn.disabled = true;
+      downloadBtn.textContent = '📥 Fetching...';
+    }
+
+    try {
+      const res = await fetch(`/api/sync?key=${encodeURIComponent(cleanKey)}`);
+      const result = await res.json();
+
+      if (!res.ok) {
+        throw new Error(result.error || `Could not find timeline for key: ${cleanKey}`);
+      }
+
+      const remoteData = result.data;
+      if (!remoteData || !Array.isArray(remoteData.watched)) {
+        throw new Error('Invalid timeline data received from cloud.');
+      }
+
+      state.watched = new Set(remoteData.watched);
+      state.ratings = remoteData.ratings || {};
+      state.notes = remoteData.notes || {};
+      state.datesWatched = remoteData.datesWatched || {};
+
+      state.cloudKey = result.key;
+      state.cloudLastSynced = remoteData.updatedAt || new Date().toISOString();
+      localStorage.setItem('mcu_cloud_sync_key', result.key);
+      localStorage.setItem('mcu_cloud_last_synced', state.cloudLastSynced);
+
+      saveState();
+      updateUI();
+      updateCloudBadge();
+
+      if (elements.cloudKeyDisplay) elements.cloudKeyDisplay.value = result.key;
+      if (elements.cloudLastSynced) elements.cloudLastSynced.textContent = 'Synced from cloud';
+      if (elements.cloudLinkInput) elements.cloudLinkInput.value = '';
+
+      closeCloudModal();
+      showToast(`✓ Linked device! Restored ${remoteData.watched.length} watched titles.`, 'success');
+    } catch (err) {
+      console.warn('Cloud restore error:', err.message);
+      showToast(err.message, 'warning');
+    } finally {
+      if (downloadBtn) {
+        downloadBtn.disabled = false;
+        downloadBtn.textContent = '📥 Restore';
+      }
+    }
+  }
+
+  function copySyncKey() {
+    if (!state.cloudKey) {
+      showToast('Click "Backup to Cloud" first to generate your Sync Key.', 'info');
+      return;
+    }
+    navigator.clipboard.writeText(state.cloudKey).then(() => {
+      showToast(`Copied Sync Key: ${state.cloudKey}`, 'success');
+    }).catch(() => {
+      showToast(`Sync Key: ${state.cloudKey}`, 'info');
+    });
+  }
+
+  function copyShareLink() {
+    if (!state.cloudKey) {
+      showToast('Click "Backup to Cloud" first to generate a shareable link.', 'info');
+      return;
+    }
+    const shareUrl = `${window.location.origin}${window.location.pathname}?sync=${encodeURIComponent(state.cloudKey)}`;
+    navigator.clipboard.writeText(shareUrl).then(() => {
+      showToast('Shareable link copied to clipboard!', 'success');
+    }).catch(() => {
+      prompt('Copy your shareable timeline link:', shareUrl);
+    });
+  }
+
+  function triggerAutoSyncDebounced() {
+    if (!state.autoSync || !state.cloudKey) return;
+    if (autoSyncTimeout) clearTimeout(autoSyncTimeout);
+    autoSyncTimeout = setTimeout(() => {
+      uploadToCloud(false);
+    }, 2000);
+  }
+
+  function handleUrlSync() {
+    try {
+      const params = new URLSearchParams(window.location.search);
+      const syncParam = params.get('sync');
+      if (syncParam) {
+        const clean = syncParam.trim().toUpperCase();
+        showConfirm(
+          `Do you want to load and link the shared timeline for Sync Key: "${clean}"? This will sync watched progress to this device.`,
+          () => {
+            downloadFromCloud(clean, true);
+          }
+        );
+      }
+    } catch (e) {
+      console.warn('URL sync check error:', e);
+    }
+  }
+
   function setupEventListeners() {
     // Theme toggle
     if (elements.themeToggleBtn) {
@@ -1068,11 +1299,36 @@
     elements.importCloseBtns.forEach(btn => btn.addEventListener('click', closeImportModal));
     elements.confirmCloseBtns.forEach(btn => btn.addEventListener('click', closeConfirmModal));
 
+    // Cloud modal listeners
+    if (elements.cloudSyncBtn) elements.cloudSyncBtn.addEventListener('click', openCloudModal);
+    elements.cloudCloseBtns.forEach(btn => btn.addEventListener('click', closeCloudModal));
+    if (elements.btnCloudUpload) elements.btnCloudUpload.addEventListener('click', () => uploadToCloud(true));
+    if (elements.btnCloudDownload) {
+      elements.btnCloudDownload.addEventListener('click', () => {
+        downloadFromCloud(elements.cloudLinkInput.value);
+      });
+    }
+    if (elements.btnCopySyncKey) elements.btnCopySyncKey.addEventListener('click', copySyncKey);
+    if (elements.btnCopyShareLink) elements.btnCopyShareLink.addEventListener('click', copyShareLink);
+    if (elements.cloudAutoSyncCheck) {
+      elements.cloudAutoSyncCheck.addEventListener('change', (e) => {
+        state.autoSync = e.target.checked;
+        localStorage.setItem('mcu_cloud_auto_sync', state.autoSync ? 'true' : 'false');
+        if (state.autoSync && state.cloudKey) {
+          uploadToCloud(false);
+          showToast('Auto-sync enabled: timeline changes will save to cloud.', 'success');
+        } else if (!state.autoSync) {
+          showToast('Auto-sync disabled.', 'info');
+        }
+      });
+    }
+
     document.addEventListener('keydown', (e) => {
       if (e.key === 'Escape') {
         closeNoteModal();
         closeImportModal();
         closeConfirmModal();
+        closeCloudModal();
       }
     });
 
@@ -1106,7 +1362,8 @@
       });
     }
 
-    [elements.noteModal, elements.importModal, elements.confirmModal].forEach(modal => {
+    [elements.noteModal, elements.importModal, elements.confirmModal, elements.cloudModal].forEach(modal => {
+      if (!modal) return;
       modal.addEventListener('click', (e) => {
         if (e.target === modal) {
           modal.classList.remove('active');
@@ -1210,9 +1467,13 @@
 
     setupEventListeners();
     updateUI();
+    updateCloudBadge();
 
     // Check for realtime updates in background
     fetchLatestTimeline(false);
+
+    // Check URL parameters for shareable sync link (?sync=ST-XXXXX)
+    handleUrlSync();
   }
 
   if (document.readyState === 'loading') {
