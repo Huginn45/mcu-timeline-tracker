@@ -10,10 +10,10 @@ module.exports = async function handler(req, res) {
     return res.status(200).end();
   }
 
-  const kvUrl = process.env.KV_REST_API_URL;
-  const kvToken = process.env.KV_REST_API_TOKEN;
+  const kvUrl = process.env.KV_REST_API_URL || process.env.UPSTASH_REDIS_REST_URL;
+  const kvToken = process.env.KV_REST_API_TOKEN || process.env.UPSTASH_REDIS_REST_TOKEN;
 
-  // Check if Vercel KV environment variables are configured
+  // Check if KV / Upstash Redis environment variables are configured
   const isConfigured = Boolean(kvUrl && kvToken);
 
   // Helper functions for KV interaction using Upstash REST protocol
@@ -51,7 +51,7 @@ module.exports = async function handler(req, res) {
     if (!isConfigured) {
       return res.status(503).json({
         configured: false,
-        error: "Vercel KV database is not yet connected. In your Vercel Dashboard, go to 'Storage' -> 'Create Database' -> 'KV' to enable cloud sync."
+        error: "Database is not yet connected. In your Vercel Dashboard, go to 'Storage' -> select 'Upstash' -> 'Redis' to connect."
       });
     }
 
@@ -76,7 +76,7 @@ module.exports = async function handler(req, res) {
     if (!isConfigured) {
       return res.status(503).json({
         configured: false,
-        error: "Vercel KV database is not yet connected. In your Vercel Dashboard, go to 'Storage' -> 'Create Database' -> 'KV' to enable cloud sync."
+        error: "Database is not yet connected. In your Vercel Dashboard, go to 'Storage' -> select 'Upstash' -> 'Redis' to connect."
       });
     }
 

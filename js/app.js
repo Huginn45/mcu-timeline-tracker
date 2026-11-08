@@ -1045,8 +1045,8 @@
       if (showToastFeedback) {
         showToast(err.message, 'warning');
       }
-      if (elements.cloudModalStatus && err.message.includes('Vercel KV')) {
-        elements.cloudModalStatus.innerHTML = `⚠️ <strong>Vercel KV not connected</strong>: In your Vercel Dashboard, go to <em>Storage</em> &rarr; <em>Create Database</em> &rarr; <em>KV</em> to enable cloud sync.`;
+      if (elements.cloudModalStatus && (err.message.includes('not connected') || err.message.includes('Vercel KV') || err.message.includes('Database'))) {
+        elements.cloudModalStatus.innerHTML = `⚠️ <strong>Database not connected</strong>: In your Vercel Dashboard, go to <em>Storage</em> &rarr; select <em>Upstash</em> (Redis) &rarr; connect to enable cloud sync.`;
       }
     } finally {
       if (uploadBtn) {
