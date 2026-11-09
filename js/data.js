@@ -1,8 +1,7 @@
 /**
- * Official Marvel Studios Cinematic Universe Timeline Dataset
- * Codified by Disney+ & Marvel Studios: An Official Timeline (DK Books)
- * Total Official Canon Titles: 84
- * Last Updated: 2026-11-04T15:02:55.362Z
+ * MCU Master Timeline Dataset (Auto-synchronized)
+ * Total Titles: 85
+ * Last Synced: 2026-11-09T14:32:04.152Z
  */
 const MCU_TIMELINE_DATA = [
   {
@@ -1599,6 +1598,25 @@ const MCU_TIMELINE_DATA = [
     "duration": "2h 00m",
     "description": "Official Marvel Studios Your Friendly Neighborhood Spider-Man announced for Phase 5.",
     "imdbLink": "https://www.imdb.com/search/title/?title=Your%20Friendly%20Neighborhood%20Spider-Man",
+    "disneyLink": "https://www.disneyplus.com/"
+  },
+  {
+    "id": "mcu-spider-man-brand-new-day",
+    "order": 85,
+    "timelineEra": "2026",
+    "bookNote": "Peter Parker begins a fresh, grounded chapter fighting crime in New York completely on his own without Tony Stark's tech.",
+    "releaseYear": 2026,
+    "releaseOrder": 85,
+    "title": "Spider-Man: Brand New Day",
+    "type": "movie",
+    "category": "canon",
+    "canonSource": "Disney+ & Marvel Studios: An Official Timeline (DK Books)",
+    "isDisneyCanon": true,
+    "phase": "Phase 6",
+    "saga": "The Multiverse Saga",
+    "duration": "2h 15m",
+    "description": "Peter Parker begins a fresh, grounded chapter fighting crime in New York completely on his own without Tony Stark's tech.",
+    "imdbLink": "https://www.imdb.com/title/tt20221434/",
     "disneyLink": "https://www.disneyplus.com/"
   }
 ];
